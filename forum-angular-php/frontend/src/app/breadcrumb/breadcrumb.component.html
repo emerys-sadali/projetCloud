@@ -1,0 +1,12 @@
+<!-- <span *ngIf="path.route.length != 0; then thenBlock; else elseBlock"></span>
+<ng-template #thenBlock><a >{{path.nom}}</a></ng-template>
+<ng-template #elseBlock>{{path.nom}}</ng-template> -->
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item" *ngFor='let path of paths'>
+        <span  *ngIf="path.route.length != 0; then thenBlock; else elseBlock"></span>
+    <ng-template #thenBlock><a routerLink="{{path.route}}">{{path.nom}}</a></ng-template>
+    <ng-template #elseBlock>{{path.nom}}</ng-template>
+    </li>
+    
+</ol>

@@ -1,0 +1,48 @@
+ version: '2'
+
+ services:
+  angular-service: # The name of the service
+    container_name: frontend  # Container name
+    build: ./frontend # Location of our Dockerfile
+    volumes: # Volume binding
+      - './frontend:/usr/src/app' 
+    ports: 
+      - '4200:4200' # Port mapping
+    command: > 
+      bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
+  
+  php:
+   build: backend # name of the first service
+   networks:
+    - net
+   links:
+    - db:db 
+   volumes:
+    - ./backend:/var/www/html
+   ports:
+    - 8000:80
+
+  db:
+   image: mysql
+   volumes:
+    - ./mysql:/var/lib/mysql
+   networks:
+    - net
+   environment:
+    MYSQL_ROOT_PASSWORD: root
+   ports:
+    - "3306:3306"
+
+  phpmyadmin:
+   image: phpmyadmin/phpmyadmin
+   networks:
+    - net
+   depends_on:
+    - db
+   ports:
+    - "8080:80"
+
+ 
+ networks:
+  net:
+   driver: bridge

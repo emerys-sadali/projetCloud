@@ -1,0 +1,38 @@
+
+<br><br>
+<app-create-topic (out)="receive_info($event)"></app-create-topic>
+<!-- faire fonction analyse dans le ts de type phpdata pour afficher dans la page-->
+<div>
+    <app-breadcrumb [paths]='breadcrumb'></app-breadcrumb>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" >
+
+        <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+    
+        <!-- Position Column -->
+        <ng-container matColumnDef="texte">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header > Sujet </th>
+        <td mat-cell *matCellDef="let element"> <a [routerLink]="['/posts',element.Id_s]" class="stretched-link">{{element.texte}}</a> </td>
+        </ng-container>
+    
+        <!-- Name Column -->
+        <ng-container matColumnDef="nb_posts">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> #posts </th>
+        <td mat-cell *matCellDef="let element"> {{element.nb_posts}} </td>
+        </ng-container>
+    
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Dernier_envoi">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Dernier message </th>
+        <td mat-cell *matCellDef="let element"> {{element.Dernier_envoi}} </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" style="transform: rotate(0);"></tr>
+    </table>
+    
+    <mat-paginator [pageSizeOptions]="[5, 10, 50]"
+                    showFirstLastButtons 
+                    aria-label="Select page of courses">
+    </mat-paginator>
+</div>
